@@ -1,0 +1,14 @@
+# OS & Editor Files
+.DS_Store
+Thumbs.db
+*.log
+.vscode/
+.idea/
+
+# Sensitive files and credentials
+.env*
+*.key
+*.pem
+*.secret
+*.json
+!metadata.json
