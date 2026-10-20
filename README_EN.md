@@ -1,5 +1,5 @@
-# 🍳 Fatoorak: 5-Application Smart Food Logistics & Multi-Tenant Breakfast Ecosystem
-### Enterprise System Architecture, Multi-Client Cloud Infrastructure & Hyper-Local Supply Chain Design
+# 🍳 Fatoorak: 3-Package Multi-Role Breakfast & Food Logistics Ecosystem
+### Enterprise Architecture & Technical Documentation for Customer, Admin & 3-in-1 Partners Suite
 
 🌐 **Language / اللغة**: **English** | [العربية](README.md)
 
@@ -13,179 +13,181 @@
 
 ---
 
-## 📌 Executive Overview & Operating Philosophy
+## 📌 Executive Overview & Architectural Philosophy
 
-**Fatoorak** is an integrated, hyper-local on-demand food logistics ecosystem designed to digitize and optimize the fresh morning breakfast sector. It bridges traditional eateries, commercial kitchens, and home-based culinary producers with end-consumers and corporate workforces (schools, universities, enterprise campuses) through an intelligent local distribution fleet.
+**Fatoorak** is an integrated, hyper-local on-demand food logistics ecosystem designed to digitize and optimize the fresh morning breakfast sector. It connects traditional diners, commercial kitchens, and licensed home food producers with consumers and institutional clusters (schools, universities, enterprise corporate campuses) through an intelligent local distribution fleet.
 
-The ecosystem breaks conventional delivery distance constraints by introducing **"Collection Points (نقاط التجميع)"** and **"Linked Order Routing (طلبات الربط)"**. Rather than relying on consumer web frontends, the platform operates purely through **five dedicated native mobile applications (5 Integrated Subsystems)** synchronized in real time via **Google Firebase Cloud Firestore Real-Time Snapshot Streams**.
+The platform eliminates conventional delivery distance limitations by introducing **"Collection Points (نقاط التجميع)"** and **"Linked Order Routing (طلبات الربط)"**. Rather than relying on web frontends, the system operates purely through **three core Flutter application packages (covering 5 integrated operational roles)** synchronized in real time via **Google Firebase Cloud Firestore Real-Time Snapshot Streams**:
+
+1. **📱 Customer App (`fatoorak_customer`)**: For individual ordering, collection point deliveries, and institutional group orders.
+2. **🛡️ Central Super Admin App (`flutter_migration`)**: For territory-wide dispatch monitoring, collection point approvals, and commission audits.
+3. **🤝 Unified Partners Suite (`fatoorak_partners`)**: A multi-role 3-in-1 application encapsulating:
+   - 🛵 **Driver / Captain Subsystem (`driver`)**: Background GPS telemetry, prepaid wallet commission deductions, and turn-by-turn navigation.
+   - 🍳 **Restaurant / Kitchen Subsystem (`restaurant`)**: Tablet Kitchen Display System (KDS), menu availability toggles, and remote linked hub orders.
+   - 🏢 **Collection Point Hub Subsystem (`hub`)**: Institutional parcel reception, customer verification, and revolving cash custody.
 
 > 🔒 **Proprietary Notice & Intellectual Property Disclaimer**:
-> In accordance with commercial confidentiality and intellectual property safeguards, this repository is dedicated solely to documenting the **enterprise system architecture, logistics state machines, financial cash-flow mechanics, and 5-app structural modularity** without exposing proprietary executable code or sensitive cloud secrets.
+> In accordance with commercial confidentiality and intellectual property safeguards, this repository is dedicated solely to documenting the **enterprise system architecture, real codebase file mapping, logistics state machines, and financial cash-flow mechanics** without exposing proprietary executable code or sensitive cloud secrets.
 
 ---
 
 ## 🏛️ End-to-End System Architecture
 
-The diagram below illustrates the real-time operational mesh connecting all five dedicated applications with the cloud core:
-
 ```mermaid
 flowchart TD
-    subgraph Ecosystem_Apps ["The 5 Dedicated Native Subsystems"]
-        APP_CLIENT["📱 1. Customer Mobile App (Flutter)\nIndividual & Corporate Group Orders, Collection Point Selection"]
-        APP_RESTAURANT["🍳 2. Partners & Kitchens Terminal App (Flutter KDS)\nReal-time Order Intake, Menu Toggles, Linked Route Orders"]
-        APP_CAPTAIN["🛵 3. Captains & Driver Logistics App (Flutter)\nBackground GPS, Pre-Funded Wallet Deductions, Dispatch"]
-        APP_POINT["🏢 4. Collection Point Terminal App (Flutter)\nInstitutional Package Reception, Verification & Handover"]
-        APP_ADMIN["🛡️ 5. Super Admin Control App (Flutter)\nFinancial Audits, 1200x600 Banner Engine, Compliance"]
-    end
+    subgraph Packages_Structure ["Application Packages & Operational Roles"]
+        subgraph Customer_App ["📱 1. Customer Application (fatoorak_customer)"]
+            C_ORDER["Direct Doorstep or Collection Point Delivery"]
+            C_GROUP["Consolidated Corporate & School Group Orders"]
+            C_TRACK["Real-Time Driver Trajectory Tracking"]
+        end
 
-    subgraph Security_Identity ["Identity & Policy Enforcement"]
-        AUTH["🔐 Firebase Authentication\n(SMS OTP Verification & Role-Based Claims)"]
-        RULES["🛡️ Firestore Security Rules\n(Zero-Trust, Field-Level Write Restrictions)"]
+        subgraph Partners_App ["🤝 2. Unified Partners Suite (fatoorak_partners)"]
+            P_DRIVER["🛵 Driver / Captain Subsystem (driver)
+Background GPS, Wallet Commission Deduction, Route Ops"]
+            P_REST["🍳 Restaurant / Kitchen Subsystem (restaurant)
+Tablet KDS Terminal, Menu Toggles, Linked Hub Orders"]
+            P_HUB["🏢 Collection Point Hub Subsystem (hub)
+Institutional Inbound Parcel Intake & Customer Handover"]
+        end
+
+        subgraph Admin_App ["🛡️ 3. Super Admin Application (flutter_migration)"]
+            A_MONITOR["Territory-Wide Live Dispatch Monitoring & Financial Audits"]
+            A_HUBS["Collection Point Approvals, Merchant Verification & Compliance"]
+            A_ADS["Standardized 1200x600 px In-App Advertising Engine"]
+        end
     end
 
     subgraph Cloud_Core ["Google Firebase Real-Time Cloud Core"]
-        DB[("🔥 Cloud Firestore\n(Sub-Second Real-Time Snapshot Listeners)")]
-        FCM["🔔 Firebase Cloud Messaging (FCM)\n(Persistent Audible Alerts for Kitchens & Drivers)"]
-        WALLET["💰 Commission & Settlement Engine\n(Automated Platform Fee Deductions)"]
+        AUTH["🔐 Firebase Authentication (SMS OTP & Role Claims)"]
+        DB[("🔥 Cloud Firestore (Real-Time Snapshot Streams)")]
+        FCM["🔔 Firebase Cloud Messaging (Audible Kitchen & Driver Alerts)"]
+        WALLET["💰 Commission Engine & Prepaid Wallet Reconciliation"]
     end
 
-    APP_CLIENT & APP_RESTAURANT & APP_CAPTAIN & APP_POINT & APP_ADMIN --> AUTH
-    AUTH --> RULES
-    RULES --> DB
+    Customer_App & Partners_App & Admin_App --> AUTH
+    AUTH --> DB
     DB <--> WALLET
-    DB -- Real-Time Triggers --> FCM
-    FCM -->|Instant Audio Chime| APP_RESTAURANT
-    FCM -->|Proximity Task Dispatch| APP_CAPTAIN
-    FCM -->|Package Inbound Alert| APP_POINT
-    FCM -->|Live Status Milestones| APP_CLIENT
+    DB -- Real-Time Events --> FCM
+    FCM -->|Instant Audio Alert| P_REST
+    FCM -->|Proximity Dispatch Notification| P_DRIVER
+    FCM -->|Package Arrival Notification| P_HUB
+    FCM -->|Live Order Milestone Updates| Customer_App
 ```
 
 ---
 
-## 🧩 Detailed Breakdown of the 5 Dedicated Applications
+## 🧩 In-Depth Codebase & Screen Mapping for All Subsystems
 
-### 1. 📱 Customer Mobile App (Flutter / Dart)
-* **Target Audience**: Retail consumers, school faculty, corporate employee clusters, and students.
-* **Architectural Capabilities**:
-  - **Dual Fulfillment Options**: Direct doorstep delivery or pickup from a verified institutional **"Collection Point"** (school, corporate campus, commercial complex).
-  - **"Consolidated Institutional Delivery (التوصيل على الكل)"**: Merges breakfast orders from coworkers into a synchronized batch dispatch, drastically reducing delivery fees and packaging arrivals into a single punctual drop-off.
-  - **"Distance-Breaking Linked Catalog"**: Enables ordering from distant kitchens outside the standard radius by routing through verified partner collection points.
-  - **Live GPS Tracking**: Real-time driver trajectory tracking with battery-optimized background updates.
-
----
-
-### 2. 🍳 Partners & Kitchens Terminal App (Flutter / Dart)
-* **Target Audience**: Traditional diners, commercial kitchens, and licensed home food producers.
-* **Architectural Capabilities**:
-  - **Digital Kitchen Display System (KDS)**: High-visibility order queue featuring continuous audible alerts that persist until an operator physically confirms preparation.
-  - **"Linked Orders Feature (طلبات الربط)"**: Allows kitchens to contractually link with remote collection points (e.g., distant schools), opening entirely new market territories beyond their immediate neighborhood.
-  - **Instant Stock Gating**: Toggle item availability with a single tap to prevent kitchen overflow or stockout cancellations.
-  - **Merchant Ledger**: Real-time tracking of gross sales, net earnings, and platform technology fee deductions.
+### 1. 📱 Customer Application (Customer App)
+* **Codebase Directory**:
+  `Antigravity/fatoorak-breakfast-delivery/fatoorak_customer`
+* **Key Production Screens & Components (`lib/customer/screens`)**:
+  - **`home_screen.dart`**: Browse nearby traditional diners, home kitchens, morning breakfast categories, and active promotions.
+  - **`customer_map_picker_screen.dart`**: Interactive GPS pin drop allowing selection between direct doorstep delivery or pickup from an authorized collection point.
+  - **`shop_menu_screen.dart`**: Dynamic restaurant catalog with item customization, modifiers, and portion options.
+  - **`cart_screen.dart` & `checkout_screen.dart`**: Shopping cart review, invoice summary, and cash-on-delivery (COD) confirmation.
+  - **`order_tracking_screen.dart`**: Sub-second driver location tracking on interactive maps via live Firestore streams.
+  - **`shared_orders_screen.dart`**: **"Consolidated Institutional Delivery"** batching employee and teacher orders into a unified delivery run to eliminate individual delivery fees.
+  - **`vouchers_screen.dart`**: Voucher discount codes and promotional wallet credits.
+  - **`orders_screen.dart` & `order_details_screen.dart`**: Historical order archive and itemized receipts.
 
 ---
 
-### 3. 🛵 Captains & Driver Logistics App (Flutter / Dart)
-* **Target Audience**: Independent logistics partners and delivery couriers.
-* **Architectural Capabilities**:
-  - **Background GPS Telemetry**: Broadcasts live coordinates strictly while the driver is toggled "Active", enabling proximity-based task dispatch and client tracking.
-  - **Pre-Funded Digital Wallet Architecture**: Couriers maintain a required minimum balance in their in-app wallet; upon completing cash collections, the platform automatically debits its commission fee directly from the prepaid wallet.
-  - **Dual-Phase Physical Cash Flow**:
-    1. Driver pays the restaurant the wholesale food cost in cash upon pickup (secured temporary outlay).
-    2. Driver collects the full order sum (food cost + delivery fee) in cash from the consumer or the Collection Point agent upon delivery.
+### 2. 🛡️ Central Super Admin Application (Admin App)
+* **Codebase Directory**:
+  `Antigravity/fatoorak-breakfast-delivery/flutter_migration` (inside `lib/admin`)
+* **Key Production Screens & Components (`lib/admin/screens`)**:
+  - **`admin_monitoring_screen.dart`**: Mission-control live dashboard tracking all regional active orders and intervening in logistical delays.
+  - **`admin_collection_points_screen.dart` & `add_collection_point_screen.dart`**: Register, verify, and geofence new institutional collection points.
+  - **`admin_shops_screen.dart`**: Restaurant management, price-matching parity audits, and account activation/suspension.
+  - **`admin_drivers_screen.dart`**: Courier compliance, vehicle readiness, and active status telemetry.
+  - **`admin_finance_screen.dart`**: Central financial clearing, platform commission auditing, and courier wallet top-up validation.
+  - **`admin_ads_screen.dart`**: Enforces precise promotional asset standards at **1200×600 px** ($2:1$ aspect ratio) for $3	imes$ pixel-density screens.
+  - **`admin_system_controls_screen.dart`**: Emergency system controls and cloud maintenance mode toggles.
+  - **`admin_requests_screen.dart`**: Review onboarding applications and information updates submitted by partners.
 
 ---
 
-### 4. 🏢 Collection Point Terminal App (Flutter / Dart)
-* **Target Audience**: Schools, business towers, government institutions, and partner commercial hubs.
-* **Architectural Capabilities**:
-  - **Smart Institutional Inbound Hub**: Streamlines high-volume breakfast deliveries for large groups without lobby congestion.
-  - **Package Verification & Handover**: Reconciles courier package IDs upon arrival, notifying the end-recipient, and validating customer identity prior to handover.
-  - **Revolving Cash Custody Settlement**:
-    1. Collection point agent settles the order cost in cash with the courier upon parcel arrival.
-    2. Collection point collects the exact invoice amount in cash from the customer upon pickup.
-    3. Generates supplementary operational revenue or serves as an organized community amenity.
+### 3. 🤝 Unified Partners Suite (Multi-Role Platform)
+* **Codebase Directory**:
+  `Antigravity/fatoorak-breakfast-delivery/fatoorak_partners`
+* **Architectural Modularity**: Single maintainable codebase hosting three distinct role-based modules dispatched at authentication:
+
+#### A. 🛵 Driver & Courier Subsystem (`lib/driver`)
+* **Screens & Modules (`lib/driver/screens`)**:
+  - **`active_route_screen.dart`**: Navigation console directing the courier to the kitchen for pickup and onward to the customer or collection point.
+  - **`available_orders_tab.dart`**: Proximity-based order pool displaying nearby pickup tasks ready for claim.
+  - **`financials_tab.dart`**: In-app prepaid wallet, live commission deduction log, and daily take-home earnings ledger.
+  - **`my_jobs_tab.dart` & `history_tab.dart`**: Active route tasks and completed delivery trip history.
+  - **Background Location Engine**: Streams driver coordinates strictly when marked "Active", disconnecting when offline.
+
+#### B. 🍳 Restaurant & Kitchen Subsystem (`lib/restaurant`)
+* **Screens & Modules (`lib/restaurant/screens`)**:
+  - **`kitchen_screen.dart`**: Tablet-optimized Kitchen Display System (KDS) featuring persistent audio chimes until an operator accepts and starts prep.
+  - **`menu_screen.dart`**: Real-time menu management, pricing adjustments, and immediate item out-of-stock toggles.
+  - **`linked_hubs_screen.dart` & `hub_requests_screen.dart`**: **"Linked Orders Feature"** enabling kitchens to partner with remote collection points to sell outside their local radius.
+  - **`direct_orders_screen.dart` & `scheduled_orders_screen.dart`**: Live order queue separated into immediate and pre-scheduled morning deliveries.
+
+#### C. 🏢 Institutional Collection Point Subsystem (`lib/hub`)
+* **Screens & Modules (`lib/hub/screens`)**:
+  - **`collection_point_dashboard_screen.dart`**: Institutional terminal for school/office coordinators to verify inbound courier parcels and dispatch to students/employees.
+  - **`link_restaurant_screen.dart`**: Issue partnership requests to approved kitchens to supply breakfast packages to the hub.
+  - **`linked_restaurants_screen.dart`**: Manage contracted partner kitchens and inspect their authorized morning menus.
+  - **Revolving Cash Custody Settlement**: Reimburses the courier for the order cost upon parcel drop-off, recovering the exact sum in cash when the customer claims the package.
 
 ---
 
-### 5. 🛡️ Super Admin Control App (Flutter / Dart)
-* **Target Audience**: Central platform operations, logistics dispatchers, and finance controllers.
-* **Architectural Capabilities**:
-  - **Master Audit Ledger**: Authoritative historical audit trail for resolving financial or logistical discrepancies across all four stakeholder groups.
-  - **Standardized In-App Banner Engine**: Enforces strict programmatic advertising assets at exactly **1200×600 px** ($2:1$ aspect ratio) to guarantee pixel clarity across $3\times$ high-density mobile displays.
-  - **Geo-Boundary & Compliance Governance**: Approves new collection points, monitors hygiene ratings, enforces price-matching parity, and penalizes non-compliant drivers.
-
----
-
-## 🔄 Integrated Order & Cash-Flow Lifecycle
+## 🔄 End-to-End Order & Cash-Flow Lifecycle
 
 ```plaintext
-[1. Consumer places order -> Selects Collection Point or Direct Doorstep]
-                       │
-                       ▼ (Continuous audio alert via FCM)
-[2. Kitchen accepts order & initiates food prep]
-                       │
-                       ▼ (Dispatches nearest active courier with sufficient wallet balance)
-[3. Courier arrives at kitchen -> Pays food cost in cash -> Receives hot order]
-                       │
-         ┌─────────────┴─────────────┐
-         ▼                           ▼
-[Route A: Direct Doorstep]      [Route B: Institutional Collection Point]
-         │                           │
-         │                           ├─ Courier hands parcel to agent & collects cash
-         │                           ├─ Agent updates status: "Package Received"
-         │                           └─ End customer arrives, pays agent & collects food
-         │
-         ▼
-[4. Final cash collection -> Cloud engine automatically debits platform fee from courier wallet]
+[1. Customer orders via fatoorak_customer -> Selects Collection Point or Doorstep]
+                                      │
+                                      ▼ (Immediate audio chime via FCM)
+[2. Kitchen receives order on tablet KDS via fatoorak_partners & initiates prep]
+                                      │
+                                      ▼ (Dispatches nearest active courier with positive wallet)
+[3. Courier arrives at kitchen -> Pays food cost in cash -> Receives hot package]
+                                      │
+                 ┌────────────────────┴────────────────────┐
+                 ▼                                         ▼
+    [Route A: Direct Doorstep]               [Route B: Institutional Collection Point]
+                 │                                         │
+                 │                                         ├─ Courier delivers parcel & collects cash from agent
+                 │                                         ├─ Agent marks status: "Package Received"
+                 │                                         └─ Customer arrives, pays cash to agent & collects meal
+                 │
+                 ▼
+[4. Transaction completed -> Cloud engine automatically debits platform fee from courier wallet]
 ```
 
 ---
 
-## 🛠️ Technology Stack Breakdown
-
-| Subsystem / Layer | Technologies | Architectural Scope |
-| :--- | :--- | :--- |
-| **Customer App** | `Flutter 3.x`, `Dart` | Reactive catalog, live tracking, consolidated corporate orders. |
-| **Kitchen App** | `Flutter (Tablet/Phone)` | Continuous audio KDS engine, menu availability, remote linked orders. |
-| **Courier App** | `Flutter`, `Background GPS` | Background location streaming, prepaid wallet deduction, route navigation. |
-| **Collection Point App** | `Flutter` | Institutional parcel verification, status milestones, and cash custody. |
-| **Admin App** | `Flutter / Dart` | Central operations, master audit logs, 1200x600 banner engine, compliance. |
-| **Database & Streaming** | `Cloud Firestore` | Zero-latency real-time snapshot listeners syncing all 5 client states. |
-| **Push Notifications** | `Firebase Cloud Messaging` | Reliable high-priority audible alerts waking up kitchen and courier terminals. |
-| **Security Governance** | `Firestore Security Rules` | Multi-tenant data isolation, price tampering prevention, role-based access. |
-
----
-
-## 📂 Modular System Folder Tree
+## 📂 Real Source Code Directory Tree
 
 ```plaintext
-fatoorak-system/
-├── apps/
-│   ├── fatoorak_customer/          # 📱 Customer App (Direct, Collection Points, Live GPS)
-│   │   ├── lib/features/           # (catalog, group_orders, collection_points, tracking)
-│   │   └── lib/core/               # State management, Theme & Network
-│   │
-│   ├── fatoorak_partners/          # 🍳 Kitchen KDS Terminal (Audio alerts, Linked orders)
-│   │   ├── lib/features/           # (live_orders, link_requests, menu_stock, earnings)
-│   │   └── lib/core/               # Continuous sound engine & Realtime listeners
-│   │
-│   ├── fatoorak_captains/          # 🛵 Courier App (Background GPS, Wallet commissions)
-│   │   ├── lib/features/           # (dispatch, background_location, cash_settlement)
-│   │   └── lib/core/               # Wallet validator & Route navigation
-│   │
-│   ├── fatoorak_collection_points/ # 🏢 Collection Point App (Institutional parcel handover)
-│   │   ├── lib/features/           # (package_intake, client_handover, point_finance)
-│   │   └── lib/core/               # Package barcode/ID verifier
-│   │
-│   └── fatoorak_admin/             # 🛡️ Super Admin App (Audit logs, 1200x600 banner manager)
-│       ├── lib/features/           # (audit_logs, banners_1200x600, partner_compliance)
-│       └── lib/core/               # Master administrative controls
-│
-├── cloud_services/
-│   ├── firestore.rules             # 🛡️ Data isolation & financial validation rules
-│   └── storage.rules               # 📦 Image asset validation & banner upload constraints
-│
-└── .gitignore                      # Comprehensive exclusions for secret tokens and keys
+Fatoorak/
+└── Antigravity/fatoorak-breakfast-delivery/
+    │
+    ├── 📱 fatoorak_customer/             # Customer Mobile Application (Flutter)
+    │   └── lib/customer/
+    │       ├── screens/                  # (home, menu, cart, checkout, map_picker, tracking, shared)
+    │       ├── providers/                # State management (Cart, Auth, Location)
+    │       └── services/                 # Firebase listeners & Order services
+    │
+    ├── 🛡️ flutter_migration/             # Super Admin Application (Flutter)
+    │   └── lib/admin/
+    │       ├── screens/                  # (monitoring, collection_points, shops, drivers, finance, ads)
+    │       └── services/                 # Admin APIs, Audit logs & Cloud controls
+    │
+    └── 🤝 fatoorak_partners/             # Unified 3-in-1 Partners Application (Flutter)
+        └── lib/
+            ├── driver/                   # 🛵 Driver / Courier Subsystem
+            │   └── screens/              # (active_route, available_orders, financials, my_jobs)
+            ├── restaurant/               # 🍳 Restaurant / Kitchen KDS Subsystem
+            │   └── screens/              # (kitchen_kds, menu, linked_hubs, direct_orders)
+            └── hub/                      # 🏢 Institutional Collection Point Subsystem
+                └── screens/              # (collection_point_dashboard, link_restaurants)
 ```
 
 ---
